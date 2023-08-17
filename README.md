@@ -90,7 +90,7 @@ A license for thos project will be added soon.
 ## Screenshots
 For a visual demonstration of how the Native Dialog Control works in action, check out the GIF below:
 
-![Working Example of Native Dialog Control](/images/wokring-example.gif)
+![Working Example of Native Dialog Control](/images/working-example.gif)
 
 ## Authors
 
