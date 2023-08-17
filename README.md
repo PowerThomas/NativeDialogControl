@@ -84,7 +84,7 @@ We welcome contributions from the community. If you'd like to contribute:
 Please ensure that your code adheres to the established standards and that all tests pass before submitting a Pull Request.
 
 ## License
-A license for thos project will be added soon.
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
 
 ## Screenshots
 For a visual demonstration of how the Native Dialog Control works in action, check out the GIF below:
