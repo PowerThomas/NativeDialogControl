@@ -85,7 +85,6 @@ Please ensure that your code adheres to the established standards and that all t
 
 ## License
 A license for thos project will be added soon.
-//This project is licensed under the [Your License Here] - see the LICENSE.md file for details. *(Please specify your license)*
 
 ## Screenshots
 For a visual demonstration of how the Native Dialog Control works in action, check out the GIF below:
