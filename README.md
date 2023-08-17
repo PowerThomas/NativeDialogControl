@@ -94,7 +94,7 @@ For a visual demonstration of how the Native Dialog Control works in action, che
 
 ## Authors
 
-- **PowerThomas** - *Initial work* - [GitHub Profile]([(https://github.com/PowerThomas])
+- **PowerThomas** - *Initial work* - [GitHub Profile](https://github.com/PowerThomas)
 
 ## Acknowledgements
 
