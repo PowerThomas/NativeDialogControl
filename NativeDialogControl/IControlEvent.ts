@@ -1,4 +1,4 @@
 export interface IControlEvent {
-    eventName: 'OnSelect';
-    eventValue?: string;
+    eventName: 'OnSelect' | undefined;
+    eventValue?: string | undefined;
 }

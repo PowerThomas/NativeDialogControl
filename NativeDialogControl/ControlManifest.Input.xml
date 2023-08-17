@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <manifest>
-  <control namespace="powerthomas" constructor="NativeDialogControl" version="0.0.6" display-name-key="NativeDialogControl" description-key="NativeDialogControl description" control-type="standard" >
+  <control namespace="powerthomas" constructor="NativeDialogControl" version="1.0.0.0" display-name-key="NativeDialogControl" description-key="NativeDialogControl description" control-type="standard" >
     <!--external-service-usage node declares whether this 3rd party PCF control is using external service or not, if yes, this control will be considered as premium and please also add the external domain it is using.
     If it is not using any external service, please set the enabled="false" and DO NOT add any domain below. The "enabled" will be false by default.
     Example1:
@@ -31,7 +31,7 @@
     <property name="dialogHeight" display-name-key="DialogHeight_Key" description-key="DialogHeight_Desc" of-type="Whole.None" usage="bound" required="true" />
     <property name="dialogWidth" display-name-key="DialogWidth_Key" description-key="DialogWidth_Desc" of-type="Whole.None" usage="bound" required="true" />
     
-    <property name="eventName" display-name-key="DialogEventName_Key" description-key="DialogEventName_Desc" of-type="SingleLine.Text" usage="output" required="true" />
+    <property name="eventName" display-name-key="DialogEventName_Key" description-key="DialogEventName_Desc" of-type="SingleLine.Text" usage="output" required="false" />
     <property name="eventValue" display-name-key="DialogEventValue_Key" description-key="DialogEventValue_Desc" of-type="SingleLine.Text" usage="output" required="false" />
     <!--
       Property node's of-type attribute can be of-type-group attribute.

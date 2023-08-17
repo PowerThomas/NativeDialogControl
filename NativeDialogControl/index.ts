@@ -12,7 +12,7 @@ export class NativeDialogControl implements ComponentFramework.StandardControl<I
     //private _container: HTMLDivElement;
 
     // Reference to ComponentFramework Context object
-    private _context: ComponentFramework.Context<IInputs>;
+    //private _context: ComponentFramework.Context<IInputs>;
 
     // Reference to the current open state of the dialog
     private _dialogIsVisible: boolean;
@@ -35,7 +35,11 @@ export class NativeDialogControl implements ComponentFramework.StandardControl<I
      */
     public init(context: ComponentFramework.Context<IInputs>, notifyOutputChanged: () => void, state: ComponentFramework.Dictionary, container: HTMLDivElement): void {
         this._notifyOutputChanged = notifyOutputChanged;
-        this._context = context;
+        this._dialogIsVisible = false
+        this._event = {
+            eventName: undefined,
+            eventValue: undefined,
+        };
     }
 
 
@@ -44,98 +48,135 @@ export class NativeDialogControl implements ComponentFramework.StandardControl<I
      * @param context The entire property bag available to control via Context Object; It contains values as set up by the customizer mapped to names defined in the manifest, as well as utility functions
      */
     public updateView(context: ComponentFramework.Context<IInputs>): void {
-        this._context = context;
-        const p = this._context.parameters;
+        const p = context.parameters;
+        console.debug("-----------------------------");
+        console.debug("Properties have been updated:");
+        console.debug("context.mode.isVisible:" + context.mode.isVisible);
+        console.debug("_dialogIsVisible:" + this._dialogIsVisible);
 
-        if (this._context.mode.isVisible && !this._dialogIsVisible) {
-            switch (p.type.raw) {
-                case "0": // Alert dialog
+        if (context.mode.isVisible) {
+            console.debug("Component is visible, continue...");
+            if (this._event.eventName === undefined) {
+                console.debug("No event available, continue...");
+                if (!this._dialogIsVisible) {
+                    console.debug("_dialogIsVisible:" + this._dialogIsVisible + ", setting to 'true'...");
                     this._dialogIsVisible = true;
-                    this._context.navigation.openAlertDialog(
-                        {
-                            text: defaultIfEmpty(p.text, ''),
-                            confirmButtonLabel: defaultIfEmpty(p.confirmButtonLabel, ''),
-                        },
-                        {
-                            height: undefinedIfZero(p.dialogHeight),
-                            width: undefinedIfZero(p.dialogWidth),
-                        }
-                    ).then(
-                        () => {
-                            console.log("Alert dialog closed");
-                            this._event = {
-                                eventName: 'OnSelect',
-                                eventValue: 'close',
-                            };
-                            this._notifyOutputChanged();
-                        },
-                        () => {
-                            console.log("Error in Alert Dialog");
-                            this._dialogIsVisible = false;
-                        },
-                    );
-                    break;
+                    console.debug("_dialogIsVisible:" + this._dialogIsVisible);
+                    switch (p.type.raw) {
+                        case "0": // Alert dialog
+                            console.debug("Dialog type is 'Alert'. Opening Alert Dialog...");
+                            context.navigation.openAlertDialog(
+                                {
+                                    text: defaultIfEmpty(p.text, ''),
+                                    confirmButtonLabel: defaultIfEmpty(p.confirmButtonLabel, ''),
+                                },
+                                {
+                                    height: undefinedIfZero(p.dialogHeight),
+                                    width: undefinedIfZero(p.dialogWidth),
+                                }
+                            ).then(
+                                () => {
+                                    console.debug("Alert dialog is closed.");
+                                    console.debug("_dialogIsVisible:" + this._dialogIsVisible + ", setting to 'false'...");
+                                    this._dialogIsVisible = false;
+                                    this._event = {
+                                        eventName: 'OnSelect',
+                                        eventValue: 'close',
+                                    };
+                                    console.debug("Triggering OnSelect(close) event...");
+                                    this._notifyOutputChanged();
+                                },
+                                () => {
+                                    console.debug("Error in Alert Dialog");
+                                    console.debug("_dialogIsVisible:" + this._dialogIsVisible + ", setting to 'false'...");
+                                    this._dialogIsVisible = false;
+                                },
+                            );
+                            break;
 
-                case "1": //Confirm dialog
-                    this._dialogIsVisible = true;
-                    this._context.navigation.openConfirmDialog(
-                        {
-                            title: defaultIfEmpty(p.title, ''),
-                            subtitle: defaultIfEmpty(p.subtitle, ''),
-                            text: defaultIfEmpty(p.text, ''),
-                            confirmButtonLabel: defaultIfEmpty(p.confirmButtonLabel, ''),
-                            cancelButtonLabel: defaultIfEmpty(p.cancelButtonLabel, ''),
-                        },
-                        {
-                            height: undefinedIfZero(p.dialogHeight),
-                            width: undefinedIfZero(p.dialogWidth),
-                        }
-                    ).then(
-                        (success) => {
-                            console.log(success);
-                            if (success.confirmed) {
-                                console.log("Ok button clicked.");
-                                this._event = {
-                                    eventName: 'OnSelect',
-                                    eventValue: 'confirm',
-                                };
-                                this._notifyOutputChanged();
-                            }
-                            else {
-                                console.log("Cancel or X button clicked.");
-                                this._event = {
-                                    eventName: 'OnSelect',
-                                    eventValue: 'close',
-                                };
-                                this._notifyOutputChanged();
-                            }
-                        }
-                    );
-                    break;
+                        case "1": // Confirm dialog
+                            console.debug("Dialog type is 'Confirm'. Opening Confirm Dialog...");
+                            context.navigation.openConfirmDialog(
+                                {
+                                    title: defaultIfEmpty(p.title, ''),
+                                    subtitle: defaultIfEmpty(p.subtitle, ''),
+                                    text: defaultIfEmpty(p.text, ''),
+                                    confirmButtonLabel: defaultIfEmpty(p.confirmButtonLabel, ''),
+                                    cancelButtonLabel: defaultIfEmpty(p.cancelButtonLabel, ''),
+                                },
+                                {
+                                    height: undefinedIfZero(p.dialogHeight),
+                                    width: undefinedIfZero(p.dialogWidth),
+                                }
+                            ).then(
+                                (success) => {
+                                    console.debug("Confirm dialog is closed.");
+                                    if (success.confirmed) {
+                                        console.debug("Dialog result is: confirmed");
+                                        console.debug("_dialogIsVisible:" + this._dialogIsVisible + ", setting to 'false'...");
+                                        this._dialogIsVisible = false;
+                                        this._event = {
+                                            eventName: 'OnSelect',
+                                            eventValue: 'confirm',
+                                        };
+                                        console.debug("Triggering OnSelect(confirm) event...");
+                                        this._notifyOutputChanged();
+                                    }
+                                    else {
+                                        console.debug("Dialog result is: canceled");
+                                        console.debug("_dialogIsVisible:" + this._dialogIsVisible + ", setting to 'false'...");
+                                        this._dialogIsVisible = false;
+                                        this._event = {
+                                            eventName: 'OnSelect',
+                                            eventValue: 'close',
+                                        };
+                                        console.debug("Triggering OnSelect(close) event...");
+                                        this._notifyOutputChanged();
+                                    }
+                                }
+                            );
+                            break;
 
-                case "2": //Error dialog
-                    this._dialogIsVisible = true;
-                    this._context.navigation.openErrorDialog(
-                        {
-                            message: defaultIfEmpty(p.text, ''),
-                        }
-                    ).then(
-                        () => {
-                            console.log("Error dialog closed");
-                            this._event = {
-                                eventName: 'OnSelect',
-                                eventValue: 'close',
-                            };
-                            this._notifyOutputChanged();
-                        },
-                        () => {
-                            console.log("Error in Error Dialog");
-                            this._dialogIsVisible = false;
-                        },
-                    );
-                    break;
+                        case "2": // Error dialog
+                            console.debug("Dialog type is 'Error'. Opening Error Dialog...");
+                            context.navigation.openErrorDialog(
+                                {
+                                    message: defaultIfEmpty(p.text, ''),
+                                }
+                            ).then(
+                                () => {
+                                    console.debug("Error dialog is closed.");
+                                    console.debug("_dialogIsVisible:" + this._dialogIsVisible + ", setting to 'false'...");
+                                    this._dialogIsVisible = false;
+                                    this._event = {
+                                        eventName: 'OnSelect',
+                                        eventValue: 'close',
+                                    };
+                                    console.debug("Triggering OnSelect(close) event...");
+                                    this._notifyOutputChanged();
+                                },
+                                () => {
+                                    console.debug("Error in Error Dialog");
+                                    console.debug("_dialogIsVisible:" + this._dialogIsVisible + ", setting to 'false'...");
+                                    this._dialogIsVisible = false;
+                                },
+                            );
+                            break;
+                    }
+                } else {
+                    console.debug("_dialogIsVisible:" + this._dialogIsVisible + ", no action required.");
+                }
+            } else {
+                console.debug("Event is not cleared yet, no action required.");
             }
+        } else {
+            console.debug("Component is NOT visible, clearing event...");
+            this._event = {
+                eventName: undefined,
+                eventValue: undefined,
+            };
         }
+        console.debug("-----------------------------");
     }
 
     /**
@@ -143,7 +184,7 @@ export class NativeDialogControl implements ComponentFramework.StandardControl<I
      * @returns an object based on nomenclature defined in manifest, expecting object[s] for property marked as “bound” or “output”
      */
     public getOutputs(): IOutputs {
-        this._dialogIsVisible = false;
+
         return this._event;
     }
 
