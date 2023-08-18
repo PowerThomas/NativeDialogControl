@@ -1,4 +1,5 @@
 # Native Dialog Control
+![Native Dialog Control](/images/Native%20Dialog%20Control.png)
 
 ## Description
 Native Dialog Control is a Power Apps PCF control designed specifically for Custom Pages in Model-driven apps. By leveraging the Navigation API, it enables the use of native model-driven dialogs to enhance user interaction. Currently, the following dialog types are supported:
