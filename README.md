@@ -98,4 +98,4 @@ For a visual demonstration of how the Native Dialog Control works in action, che
 ## Acknowledgements
 
 Special thanks to:
-- My colleague Jeroen van Knotsenburg for his invaluable assistance and guidance in creating my first PCF project.
+- My colleague [Jeroen van Knotsenburg](https://github.com/Knots23) for his invaluable assistance and guidance in creating my first PCF project.
