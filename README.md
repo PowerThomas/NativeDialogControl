@@ -19,26 +19,26 @@ Once installed, you can utilize the control in your Model-driven app custom page
 ### Setup
 
 1. **Adding the Control to a Screen**: Include the control on the desired screen. Note that the control itself doesn't possess any UI elements.
-2. **Selecting the Dialog Type**: Choose among the available types: Alert Dialog, Confirm Dialog, or Error Dialog.
+2. **Selecting the `Dialog Type`**: Choose among the available types: Alert Dialog, Confirm Dialog, or Error Dialog.
 3. **Setting Key Properties**: Each dialog type requires certain properties to be set:
 
     **Alert Dialog**:
     - `Text`: The main text displayed on the dialog.
-    - `ConfirmButtonLabel`: Label text of the dialog's single button.
+    - `Confirm Button Label`: Label text of the dialog's single button.
 
     **Confirm Dialog**:
     - `Title`: The main title of the dialog.
     - `Subtitle`: The subtitle of the dialog.
     - `Text`: The main text displayed on the dialog.
-    - `ConfirmButtonLabel`: The button text for the confirmation button.
-    - `CancelButtonLabel`: The button text for the cancel button.
+    - `Confirm Button Label`: The button text for the confirmation button.
+    - `Cancel Button Label`: The button text for the cancel button.
 
     **Error Dialog**:
     - `Text`: The main text displayed on the dialog.
 
     **General Properties for All Dialogs**:
-    - `Height`: The dialog height in pixels.
-    - `Width`: The dialog width in pixels.
+    - `Dialog Height`: The dialog height in pixels.
+    - `Dialog Width`: The dialog width in pixels.
     - `Visible`: Used to control the visibility of the native dialog.
 
 ### Behavior Configuration
